@@ -161,4 +161,10 @@ class ChaosGame:
             raise ValueError("File extension not supported.")
         
 if __name__ == "__main__": 
-    ...
+    n_list = [3, 4, 5, 5, 6, 8]
+    r_list = [1/2, 1/3, 1/3, 3/8, 1/3, 1/4]
+
+    for n,r,i in zip(n_list,r_list,range(1,7)):
+        shape = ChaosGame(n,r)
+        shape.iterate(15000)
+        shape.savepng(f"figures/chaos{i}.png",color=True)
