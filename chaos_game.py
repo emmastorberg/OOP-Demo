@@ -22,6 +22,18 @@ class ChaosGame:
         self.point_list = []
         self.index_list = []
 
+    @property
+    def gradient_color(self):
+        colors = []
+        old_c = self.index_list[0]
+        for i in range(len(self.index_list)):
+            j = self.index_list[i]
+            new_c = (old_c + j)/2
+            colors.append(new_c)
+            old_c = new_c
+
+        return colors
+
     def _generate_ngon(self) -> list[np.ndarray]:
         """Defines corners of the n-gon based on n provided during initialization and stores corners in a list.
 
