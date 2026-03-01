@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from utils import random_point
 
+
 class ChaosGame:
     def __init__(self, n: int, r: float = 0.5):
         """Creates an n-gon according to parameter specifications.
@@ -28,7 +29,7 @@ class ChaosGame:
         old_c = self.index_list[0]
         for i in range(len(self.index_list)):
             j = self.index_list[i]
-            new_c = (old_c + j)/2
+            new_c = (old_c + j) / 2
             colors.append(new_c)
             old_c = new_c
 
@@ -40,7 +41,7 @@ class ChaosGame:
         Returns:
             list[np.ndarray]: List of corners as NumPy arrays.
         """
-        theta = np.linspace(0, 2*np.pi,self.n+1)
+        theta = np.linspace(0, 2 * np.pi, self.n + 1)
         corners = []
 
         for i in range(self.n):
@@ -57,7 +58,7 @@ class ChaosGame:
         return random_point(self.corners)
 
     def iterate(self, steps: int, discard: int = 5) -> tuple[np.ndarray, np.ndarray]:
-        """Fills up the empty list of points and the list of indices (corresponding to which corner is selected) created in the constructor. 
+        """Fills up the empty list of points and the list of indices (corresponding to which corner is selected) created in the constructor.
 
         Args:
             steps (int): Number of iterations to do
@@ -71,21 +72,23 @@ class ChaosGame:
         old_x = self._starting_point()
         for i in range(discard):
             j = np.random.randint(0, self.n)
-            new_x = self.r*old_x + (1-self.r)*self.corners[j]
+            new_x = self.r * old_x + (1 - self.r) * self.corners[j]
             old_x = new_x
 
         for i in range(steps):
             j = np.random.randint(0, self.n)
-            new_x = self.r*old_x + (1-self.r)*self.corners[j]
+            new_x = self.r * old_x + (1 - self.r) * self.corners[j]
             self.point_list.append(new_x)
             self.index_list.append(j)
             old_x = new_x
 
-        self.point_list = np.array(self.point_list)     #is it weird that these are arrays now?
+        self.point_list = np.array(
+            self.point_list
+        )  # is it weird that these are arrays now?
         self.index_list = np.array(self.index_list)
 
         return self.point_list, self.index_list
-    
+
     def plot(self, color: bool = False, cmap: str = "cool"):
         """Plots the n-gon filled with points.
 
@@ -126,7 +129,7 @@ class ChaosGame:
         Raises:
             ValueError: Occurs if filename is specified with an extension other than .png.
         """
-        self.plot(color,cmap)
+        self.plot(color, cmap)
 
         # Testing filename conditions
         dotindex = outfile.find(".")
@@ -138,12 +141,13 @@ class ChaosGame:
             plt.close()
         else:
             raise ValueError("File extension not supported.")
-        
-if __name__ == "__main__": 
-    n_list = [3, 4, 5, 5, 6, 8]
-    r_list = [1/2, 1/3, 1/3, 3/8, 1/3, 1/4]
 
-    for n,r,i in zip(n_list,r_list,range(1,7)):
-        shape = ChaosGame(n,r)
+
+if __name__ == "__main__":
+    n_list = [3, 4, 5, 5, 6, 8]
+    r_list = [1 / 2, 1 / 3, 1 / 3, 3 / 8, 1 / 3, 1 / 4]
+
+    for n, r, i in zip(n_list, r_list, range(1, 7)):
+        shape = ChaosGame(n, r)
         shape.iterate(15000)
-        shape.savepng(f"figures/chaos{i}.png",color=True)
+        shape.savepng(f"figures/chaos{i}.png", color=True)

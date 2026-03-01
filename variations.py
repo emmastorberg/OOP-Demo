@@ -39,8 +39,7 @@ class Variations:
     the values after transforming them as defined in the appendix of this
     document: https://flam3.com/flame_draves.pdf
 
-    Skipped all dependent/parametric transformations, as well as Blur (Variation 34)
-    and Gaussian (Variation 35).
+    Skipped all dependent/parametric transformations.
     """
 
     # Variation 0

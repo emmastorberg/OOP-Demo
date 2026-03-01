@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def random_point(corners: list[np.ndarray]) -> np.ndarray:
     """Finds a random point within an n-gon.
 
@@ -19,11 +20,11 @@ def random_point(corners: list[np.ndarray]) -> np.ndarray:
     # Normalizing weights
     sum = np.sum(weights_list)
     for i in range(n):
-        weights_list[i] = weights_list[i]/sum
+        weights_list[i] = weights_list[i] / sum
 
     # Creating point from corners and normalized weights
     X = np.zeros(np.shape(corners)[1])
     for corner, weight in zip(corners, weights_list):
-        X += weight*corner
+        X += weight * corner
 
     return X
