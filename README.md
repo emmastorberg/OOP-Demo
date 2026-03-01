@@ -19,14 +19,14 @@ We can even make linear combinations of various weights to combine different war
 [![Linear combinations of the linear (no warp) and exponential transformation as the exponential weight increases](figures/linear_combination.png)](figures/linear_combination.png)
 
 ## How to run
-Create polygon plots by running:
+Create Chaos Game plots by running:
 ``uv run chaosgame.py``
 
-Generate the transformation catalog and warped chaos game plots by running:
+Generate the transformation catalog and warped Chaos Game plots by running:
 ``uv run variations.py``
 
 Run simple tests with:
 ``uv run pytest``
 
 ## Helpful sources
-The Chaos Game (and a few more variants of it) is described in detail [here](https://thewessens.net/ClassroomApps/Main/chaosgame.html). The defintions of the various transformation functions were found in the appendix of [this paper](https://flam3.com/flame_draves.pdf).
+The Chaos Game (and a few more variants of it) is described in detail [here](https://thewessens.net/ClassroomApps/Main/chaosgame.html). The definitions of the various transformation functions were found in the appendix of [this paper](https://flam3.com/flame_draves.pdf).

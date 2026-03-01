@@ -56,26 +56,6 @@ class ChaosGame:
         """
         return random_point(self.corners)
 
-    def plot_ngon(self):
-        """Plots the n-gon outline.
-        """
-        # TODO: Remove?
-        # Creating x- and y-arrays
-        x = np.zeros(self.n+1); y = np.zeros(self.n+1)
-
-        for i in range(self.n):
-            x[i] = self.corners[i][0]
-            y[i] = self.corners[i][1]
-
-        x[self.n] = self.corners[0][0]
-        y[self.n] = self.corners[0][1]
-
-        # Plotting and displaying
-        plt.plot(x,y)
-        plt.axis("equal")
-        plt.axis("off")
-        plt.show()
-
     def iterate(self, steps: int, discard: int = 5) -> tuple[np.ndarray, np.ndarray]:
         """Fills up the empty list of points and the list of indices (corresponding to which corner is selected) created in the constructor. 
 
@@ -86,7 +66,7 @@ class ChaosGame:
         Returns:
             tuple[np.ndarray, np.ndarray]: Updated point and index lists, now as NumPy arrays.
         """
-        # TODO change point and index lsit names to reflect type?
+        # TODO change point and index list names to reflect type?
         # Iterating to make a pattern
         old_x = self._starting_point()
         for i in range(discard):
@@ -118,7 +98,6 @@ class ChaosGame:
         if color == False:
             colors = "black"
         else:
-            # TODO: Add handling for color
             colors = self.gradient_color
 
         # Plotting
