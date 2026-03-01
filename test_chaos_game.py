@@ -24,7 +24,7 @@ def test_savepng_raises_ValueError_for_incorrect_extension():
     with pytest.raises(ValueError):
         square = ChaosGame(4,1/3)
         square.iterate(10000)
-        square.savepng("shouldnotwork.pdf")
+        square.savepng("shouldnotwork.pdf", color=True)
 
 if __name__ == "__main__":
     test_constructor_raises_ValueError_for_small_n()

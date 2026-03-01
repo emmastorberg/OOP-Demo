@@ -4,7 +4,7 @@ Demonstration of object-oriented principles for KDA
 ## About the program
 In the Chaos Game, we build fractals point by point within n-gons. We select a random starting point in the interior of the shape, and with a few random selections of vertices and placing points down according to a specific ruleset, we produce a fractal pattern over many iterations. This procedure is carried out in the program `chaosgame.py`, and lets us create figures such as these for various values of $n$:
 
-[![Chaos Game art with n = 3, i.e. a triangle. See figures/ for more plots.](figures/transformation_catalog.png)](figures/chaos1.png)
+[![Chaos Game art with n = 3, i.e. a triangle. See figures/ for more plots.](figures/chaos1.png)](figures/chaos1.png)
 
 The program `variations.py` contains a number of transformations to a grid, as displayed in the figures below:
 
@@ -29,4 +29,4 @@ Run simple tests with:
 ``uv run pytest``
 
 ## Helpful sources
-The Chaos Game (and a few more variants of it) is described in detail [here](https://thewessens.net/ClassroomApps/Main/chaosgame.html). The defintions of the various transformation functions are provided in the appendix of [this paper](https://flam3.com/flame_draves.pdf).
+The Chaos Game (and a few more variants of it) is described in detail [here](https://thewessens.net/ClassroomApps/Main/chaosgame.html). The defintions of the various transformation functions were found in the appendix of [this paper](https://flam3.com/flame_draves.pdf).
