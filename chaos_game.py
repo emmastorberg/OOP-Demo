@@ -147,3 +147,6 @@ class ChaosGame:
             plt.close()
         else:
             raise ValueError("File extension not supported.")
+        
+if __name__ == "__main__": 
+    ...
