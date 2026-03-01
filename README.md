@@ -1,3 +1,5 @@
+![Tests](https://github.com/emmastorberg/OOP-Demo/actions/workflows/tests.yml/badge.svg)
+
 # Object-Oriented Programming Demo
 Demonstration of object-oriented principles for KDA
 
