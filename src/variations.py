@@ -2,7 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from typing import Self
+
+from fractal import Fractal
 from chaos_game import ChaosGame
+from barnsley_fern import BarnsleyFern
 
 
 class Variations:
@@ -18,17 +21,17 @@ class Variations:
         return self._func(self.x, self.y)
 
     @classmethod
-    def from_chaos_game(cls, ngon: ChaosGame, name: str) -> Self:
-        """Create a specific variation of a ChaosGame n-gon.
+    def from_fractal(cls, fractal: Fractal, name: str) -> Self:
+        """Create a specific variation of a fractal.
         Args:
-            ngon (ChaosGame): ChaosGame instance containing generated points
+            fractal (Fractal): Fractal instance containing generated points
             name (str): Name of transformation function to apply
 
         Returns:
-            Self: Variations instance initialized with point data extracted from ChaosGame object
+            Self: Variations instance initialized with point data extracted from Fractal object
         """
-        x = ngon.point_list[:, 0]
-        y = ngon.point_list[:, 1]
+        x = fractal.point_list[:, 0]
+        y = fractal.point_list[:, 1]
         warp = cls(x, y, name)
         return warp
 
@@ -45,7 +48,7 @@ class Variations:
     # Variation 0
     @staticmethod
     def linear(x, y):
-        return x, y
+        return x, -y
 
     # Variation 1
     @staticmethod
@@ -241,19 +244,19 @@ class Variations:
 # ----------------------- NOT IN CLASS ----------------------- #
 
 
-def linear_combination_wrap(v1: ChaosGame, v2: ChaosGame) -> callable:
+def linear_combination_wrap(v1: Fractal, v2: Fractal) -> callable:
     """Defines and returns a function "weighted".
 
     Args:
-        v1 (Variations): Variation of a ChaosGame plot
-        v2 (Variations): Variation of a ChaosGame plot
+        v1 (Variations): Variation of a fractal plot
+        v2 (Variations): Variation of a fractal plot
 
     Returns:
         callable: Returns a method for calculating the linear combination the Variations v1 and v2.
     """
 
     def weighted(w: float) -> tuple[np.ndarray, np.ndarray]:
-        """Performs addition and scaling of transformed ChaosGame plots (of Variations type) v1 and v2 by some scalar.
+        """Performs addition and scaling of transformed fractal plots (of Variations type) v1 and v2 by some scalar.
 
         Args:
             w (float): Scalar in the interval [0,1]
@@ -271,7 +274,7 @@ def linear_combination_wrap(v1: ChaosGame, v2: ChaosGame) -> callable:
 
 
 if __name__ == "__main__":
-    # Making transformation catalog figure, showing all possible transformations
+    # Making transformation catalog figure, showing all possible transformations ----------
     grid_values = np.linspace(-1, 1, 170)
     x, y = np.meshgrid(grid_values, grid_values)
     x_values = x.flatten()
@@ -320,34 +323,52 @@ if __name__ == "__main__":
         ax.axis("off")
     fig.savefig("figures/transformation_catalog.png")
 
-    # Making warped chaos game plots
-    shape = ChaosGame(5, 3 / 8)
-    shape.iterate(20000)
-    colors = shape.gradient_color
+    # Making warped fractal plots ---------------------------------------------------------
+    # ChaosGame:
+    ngon = ChaosGame(5, 5 / 8)
+    ngon.iterate(20000)
 
     transformations = ["linear", "swirl", "handkerchief", "polar", "bent", "horseshoe"]
     variations = [
-        Variations.from_chaos_game(shape, version) for version in transformations
+        Variations.from_fractal(ngon, version) for version in transformations
     ]
 
     fig, axs = plt.subplots(3, 2, figsize=(9, 9))
     for i, (ax, variation) in enumerate(zip(axs.flatten(), variations)):
         u, v = variation.transform()
-        ax.scatter(u, -v, s=0.2, marker=".", c=colors, cmap="gist_ncar")
+        ax.scatter(u, -v, s=0.2, marker=".", c=ngon.color, cmap="gist_ncar")
         ax.set_title(variation.name)
         ax.axis("equal")
         ax.axis("off")
     fig.savefig("figures/warped_chaos_game.png")
 
-    # Making linear combinations of warped chaos game plots
+    # BarnsleyFern:
+    fern = BarnsleyFern()
+    fern.iterate(50000)
+
+    transformations = ["linear", "power", "ex", "julia", "diamond", "fisheye"]
+    variations = [
+        Variations.from_fractal(fern, version) for version in transformations
+    ]
+
+    fig, axs = plt.subplots(3, 2, figsize=(9, 9))
+    for i, (ax, variation) in enumerate(zip(axs.flatten(), variations)):
+        u, v = variation.transform()
+        ax.scatter(u, -v, s=0.2, marker=".", c=fern.color)
+        ax.set_title(variation.name)
+        ax.axis("equal")
+        ax.axis("off")
+    fig.savefig("figures/warped_barnsley_fern.png")
+
+    # Making linear combinations of warped ChaosGame plots ------------------------------------
     ngon = ChaosGame(4, 0.48)
     ngon.iterate(30000)
-    colors = ngon.gradient_color
+    colors = ngon.color
 
     coeffs = np.linspace(0, 1, 4)
 
-    variation1 = Variations.from_chaos_game(ngon, "linear")
-    variation2 = Variations.from_chaos_game(ngon, "exponential")
+    variation1 = Variations.from_fractal(ngon, "linear")
+    variation2 = Variations.from_fractal(ngon, "exponential")
 
     variation1and2combo = linear_combination_wrap(variation1, variation2)
 
