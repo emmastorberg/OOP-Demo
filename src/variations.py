@@ -12,13 +12,53 @@ class Variations:
     eps = 1e-12
 
     def __init__(self, x: np.ndarray, y: np.ndarray, name: str):
+        """Defines a transformation on points in a 2D grid.
+
+        Args:
+            x (np.ndarray): x-values of points to be transformed.
+            y (np.ndarray): y-values of points to be transformed.
+            name (str): The type of transformation to initialize # TODO: add a way to easily access the list of possible transformations besides reading the code to see what's supported
+        """
         self.x = x
         self.y = y
         self.name = name
         self._func = getattr(Variations, self.name)
 
-    def transform(self):
+    def transform(self) -> tuple[np.ndarray, np.ndarray]:
+        """Performs the transformation of the input points according the selected transformation
+
+        Returns:
+            tuple[np.ndarray, np.ndarray]: Transformed points
+        """
         return self._func(self.x, self.y)
+
+    # TODO: add magic methods so we can add and scale variations directly, without clunky linear combinations outside the class
+    # FIXME: we can't define the transformations internally in this way. 
+    # NOTE: The class is currently not closed under addition or scalar multiplication
+    # def __add__(self, other: Self) -> Self:
+    #     """Add two variations together (element-wise sum of transformations)."""
+    #     def combined_transform(x, y):
+    #         x1, y1 = self._func(x, y)
+    #         x2, y2 = other._func(x, y)
+    #         return x1 + x2, y1 + y2
+        
+    #     new_var = Variations(self.x, self.y, f"{self.name} + {other.name}") # NOTE: This will fail
+    #     new_var._func = combined_transform
+    #     return new_var
+
+    # def __mul__(self, scalar: float) -> Self:
+    #     """Scale a variation by a scalar."""
+    #     def scaled_transform(x, y):
+    #         x_t, y_t = self._func(x, y)
+    #         return scalar * x_t, scalar * y_t
+        
+    #     new_var = Variations(self.x, self.y, f"{scalar:.2f}*{self.name}") # NOTE:This will fail
+    #     new_var._func = scaled_transform
+    #     return new_var
+
+    # def __rmul__(self, scalar: float) -> Self:
+    #     """Right multiplication (scalar * variation)."""
+    #     return self.__mul__(scalar)
 
     @classmethod
     def from_fractal(cls, fractal: Fractal, name: str) -> Self:
@@ -35,7 +75,7 @@ class Variations:
         warp = cls(x, y, name)
         return warp
 
-    # ----------------------- TRANSFORMATIONS ------------------- #
+    # ----------------------- TRANSFORMATIONS ------------------- 
 
     """
     All the static methods take in pairs of x- and y-values, and they return
@@ -241,10 +281,10 @@ class Variations:
         return factor * x, factor * y
 
 
-# ----------------------- NOT IN CLASS ----------------------- #
+# ----------------------- NOT IN CLASS -----------------------
 
 
-def linear_combination_wrap(v1: Fractal, v2: Fractal) -> callable:
+def linear_combination_wrap(v1: Fractal, v2: Fractal) -> callable: # TODO: move to utils? but it's not really a helper function, just extra functionality
     """Defines and returns a function "weighted".
 
     Args:
@@ -309,7 +349,8 @@ if __name__ == "__main__":
         "tangent",
         "square",
         "cross",
-    ]
+    ] # TODO: can we create/access this list some other way?
+
     variations = [
         Variations(x_values, y_values, version) for version in transformations
     ]

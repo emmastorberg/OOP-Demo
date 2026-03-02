@@ -3,13 +3,14 @@ import numpy as np
 from utils import random_point, generate_ngon, compute_optimal_r
 from fractal import Fractal
 
+
 class ChaosGame(Fractal):
     def __init__(self, n: int, r: float | None = None):
-        """Creates an n-gon according to parameter specifications.
+        """Creates an n-gon Chaos Game according to parameter specifications.
 
         Args:
             n (int): Number of sides of the n-gon. Must be greater than 2.
-            r (float, optional): Ratio used to find iterations of a random starting point within the n-gon. Must be in the interval (0,1). Defaults to None such that optimal r-value is calculated.
+            r (float, optional): Ratio used to find iterations of a random starting point within the n-gon. Must be in the interval (0,1). Defaults to None such that optimal r-value is calculated unless overridden.
         """
         super().__init__()
 
@@ -27,7 +28,12 @@ class ChaosGame(Fractal):
         self.index_list = []
 
     @property
-    def color(self):
+    def color(self) -> list[float]:
+        """Creates and a smooth mapping for use by Matplotlib to achieve gradient effect of color map when color is selected.
+
+        Returns:
+            list[float]: List of scalar values that Matplotlib can map to color values in its color maps
+        """
         colors = []
         old_c = self.index_list[0]
         for i in range(len(self.index_list)):
@@ -45,8 +51,10 @@ class ChaosGame(Fractal):
             np.ndarray: Random point in the interior of the shape
         """
         return random_point(self.corners)
-    
-    def _update_rule(self, old_x: np.ndarray, discard_point: bool = False) -> np.ndarray:
+
+    def _update_rule(
+        self, old_x: np.ndarray, discard_point: bool = False
+    ) -> np.ndarray:
         """The update rule determining the next point to place.
 
         Args:
@@ -56,23 +64,22 @@ class ChaosGame(Fractal):
             np.ndarray: The next point in the iteration sequence
         """
         j = np.random.randint(0, self.n)
-        
+
         new_x = (1 - self.r) * old_x + self.r * self.corners[j]
         if not discard_point:
             self.index_list.append(j)
-        
+
         return new_x
 
     def _finalize_iteration(self) -> None:
-        """Post-processing data, in this case converting index_list to np.ndarray.
-        """
+        """Post-processing data, in this case converting index_list to np.ndarray."""
         super()._finalize_iteration()
         self.index_list = np.array(self.index_list)
 
 
 if __name__ == "__main__":
     n_list = [3, 4, 5, 5, 6, 8]
-    r_list = [1 / 2, None, 0.5, None, 7/8, None]
+    r_list = [1 / 2, None, 0.5, None, 7 / 8, None]
 
     for n, r, i in zip(n_list, r_list, range(1, 7)):
         shape = ChaosGame(n, r)

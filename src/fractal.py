@@ -5,6 +5,8 @@ from abc import ABC, abstractmethod
 
 class Fractal(ABC):
     def __init__(self):
+        """Abstract Base Class (ABC), so cannot be used on its own.
+        """
         self.point_list = []
 
     @property
@@ -15,7 +17,7 @@ class Fractal(ABC):
 
     @abstractmethod
     def _starting_point(self) -> np.ndarray:
-        """Defines the first point from which iteration begins.
+        """Defines the point from which iteration begins.
         """
 
     @abstractmethod
@@ -27,7 +29,7 @@ class Fractal(ABC):
         self.point_list = np.array(self.point_list)
 
     def iterate(self, steps: int, discard: int = 0) -> None:
-        """Populate points using the subclass update rule.
+        """Find points iteratively using the subclass update rule.
 
         Args:
             steps (int): Number of points to store.
