@@ -59,7 +59,7 @@ If you don't use `uv`, run the following commands to set up the project and crea
 ```python3 src/chaos_game.py```
 
 
-```python3 src/barnsley_fern.py````
+```python3 src/barnsley_fern.py```
 
 
 ```python3 src/variations.py```
