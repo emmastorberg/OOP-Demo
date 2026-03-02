@@ -12,7 +12,7 @@ class AffineTransform:
         e: float = 0,
         f: float = 0,
     ):
-        """Class describing a affine transformation of the form Ax + b, where A is a 2x2 real matrix and b is a 2D vector.
+        """Class describing an affine transformation of the form Ax + b, where A is a 2x2 real matrix and b is a 2D vector.
 
         Args:
             a (float, optional): Top left entry of matrix A. Defaults to 0.
