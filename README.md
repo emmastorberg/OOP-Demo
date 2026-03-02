@@ -36,19 +36,33 @@ We can even make linear combinations of various transformations to combine diffe
 ## How to run
 Create Chaos Game plots by running
 
-``uv run chaos_game.py``
+``uv run src/chaos_game.py``
 
 Create the Barnsley Fern by running 
 
-``uv run barnsley_fern.py``
+``uv run src/barnsley_fern.py``
 
 Generate the transformation catalog and warped Chaos Game plots by running
 
-``uv run variations.py``
+``uv run src/variations.py``
 
 Run simple tests with
 
 ``uv run pytest``
+
+If you don't use `uv`, run the following commands to set up the project and create plots
+
+
+```pip install -e .```
+
+
+```python3 src/chaos_game.py```
+
+
+```python3 src/barnsley_fern.py````
+
+
+```python3 src/variations.py```
 
 ## Helpful sources
 The math and algorithm behind the Chaos Game (and a few more variants of it) are described in detail [here](https://thewessens.net/ClassroomApps/Main/chaosgame.html), as well as on the [Chaos Game](https://en.wikipedia.org/wiki/Chaos_game) and [Barnsley Fern](https://en.wikipedia.org/wiki/Barnsley_fern) Wikipedia pages. The definitions of the various transformation functions on a point $(x, y)$ can be found in the appendix of [this paper](https://flam3.com/flame_draves.pdf).
