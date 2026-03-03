@@ -284,7 +284,7 @@ class Variations:
 # ----------------------- NOT IN CLASS -----------------------
 
 
-def linear_combination_wrap(v1: Fractal, v2: Fractal) -> callable: # TODO: move to utils? but it's not really a helper function, just extra functionality
+def linear_combination_wrap(v1: Variations, v2: Variations) -> callable: # TODO: move to utils? but it's not really a helper function, just extra functionality
     """Defines and returns a function "weighted".
 
     Args:
